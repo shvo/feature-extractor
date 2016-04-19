@@ -19,12 +19,21 @@
 #include "llvm/Analysis/ScalarEvolutionExpressions.h"
 #include "llvm/Support/Debug.h"
 #include "llvm/IR/Instructions.h"
+#include "llvm/InstVisitor.h"
 #include "DDG.h"
 
 
 
 using namespace llvm;
 using namespace std;
+
+struct CountAllocaVisitor : public InstVisitor<CountAllocaVisitor> {
+    unsigned Count;
+    CountAllocaVisitor() : Count(0) {}
+    
+    //void visitAllocaInst(AllocaInst &AI) { ++Count; }
+    void visitLoadInst(LoadInst &LI) { ++Count; }
+};
 
 // Performance Prediction Pass
 class CanyonPass : public FunctionPass {
@@ -40,6 +49,11 @@ public:
     bool runOnFunction(Function &F) override {
         DependenceAnalysis *DA = &(getAnalysis<DependenceAnalysis>());
         LoopInfo &LI = getAnalysis<LoopInfo>();
+        
+        CountAllocaVisitor CAV;
+        CAV.visit(F);
+        int NumAllocas = CAV.Count;
+        errs() << "The number of malloc insts is: " << NumAllocas << "\n";
         
         // Construct DDG        
         //DataDepGraph *ddg = new DataDepGraph(&F, DA);
