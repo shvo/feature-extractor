@@ -1,0 +1,7 @@
+#clang -c -emit-llvm zip.c -o zip.bc
+#opt -basicaa -mem2reg -simplifycfg -loop-simplify -loop-rotate -simplifycfg -instcombine -indvars -da -analyze zip.bc
+
+
+clang -O3 -S -emit-llvm zip.c -o zip.ll
+opt -basicaa -mem2reg -simplifycfg -loop-simplify -loop-rotate -simplifycfg -instcombine -indvars -da -analyze zip.ll
+#opt -basicaa -mem2reg -loop-simplify -loop-rotate -simplifycfg -instcombine -indvars -da -analyze zip.ll

@@ -1,0 +1,5 @@
+clang -S -emit-llvm dist.cl -o dist.ll -x cl
+#opt -load ./pass.so -test -basicaa -da -analyze --debug-pass=Structure dist.ll
+#opt -load ./../../results/pass.so -basicaa -da -test -analyze --debug-pass=Structure dist.ll
+#opt -load ./../../results/pass.so -scev-aa -da -test -analyze --debug-pass=Structure dist.ll
+opt -load ./../../results/canyon.so -basicaa -da -canyon -analyze --debug-pass=Structure dist.ll
