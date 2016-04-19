@@ -37,18 +37,13 @@ public:
         AU.addRequired<LoopInfo>();
     }
 
-    typedef SmallVector<Value *, 16> ValueVector;
-    ValueVector MemInstr;
-
     bool runOnFunction(Function &F) override {
         DependenceAnalysis *DA = &(getAnalysis<DependenceAnalysis>());
         LoopInfo &LI = getAnalysis<LoopInfo>();
         
         // Construct DDG        
-        DataDepGraph *ddg = new DataDepGraph(&F, DA);
+        //DataDepGraph *ddg = new DataDepGraph(&F, DA);
 
-        // Loop Pipelining
-        errs() << "------------Loop Pipelining-----------\n";
         // iterate over loops
         for (LoopInfo::iterator L = LI.begin(), LE = LI.end(); L != LE; ++L) {
             llvm::Loop *loop = *L;
