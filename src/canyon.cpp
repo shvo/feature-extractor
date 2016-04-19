@@ -64,9 +64,11 @@ public:
         unsigned NumLoad = CFIN.Load_Count; 
         unsigned NumGetElementPtr = CFIN.GetElementPtr_Count; 
         unsigned NumFP = CFIN.FP_Count; 
+        unsigned NumINT = CFIN.INT_Count; 
         errs() << "The number of store insts is: " << NumStore << "\n";
         errs() << "The number of load insts is: " << NumLoad << "\n";
         errs() << "The number of floating-point insts is: " << NumFP << "\n";
+        errs() << "The number of integer insts is: " << NumINT << "\n";
         
         // Construct DDG        
         //DataDepGraph *ddg = new DataDepGraph(&F, DA);
