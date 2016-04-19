@@ -20,6 +20,7 @@
 #include "llvm/Support/Debug.h"
 #include "llvm/IR/Instructions.h"
 #include "llvm/InstVisitor.h"
+#include "Profiler.h"
 #include "DDG.h"
 
 
@@ -50,10 +51,21 @@ public:
         DependenceAnalysis *DA = &(getAnalysis<DependenceAnalysis>());
         LoopInfo &LI = getAnalysis<LoopInfo>();
         
+        /*
         CountAllocaVisitor CAV;
         CAV.visit(F);
         int NumAllocas = CAV.Count;
         errs() << "The number of malloc insts is: " << NumAllocas << "\n";
+        */
+
+        CountFeatureInstNum CFIN;
+        CFIN.visit(F);
+        unsigned NumStore = CFIN.Store_Count; 
+        unsigned NumLoad = CFIN.Load_Count; 
+        unsigned NumGetElementPtr = CFIN.GetElementPtr_Count; 
+        errs() << "The number of store insts is: " << NumStore << "\n";
+        errs() << "The number of load insts is: " << NumLoad << "\n";
+        errs() << "The number of getelementptr insts is: " << NumGetElementPtr << "\n";
         
         // Construct DDG        
         //DataDepGraph *ddg = new DataDepGraph(&F, DA);
