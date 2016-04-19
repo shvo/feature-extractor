@@ -16,10 +16,11 @@ struct CountFeatureInstNum : public InstVisitor<CountFeatureInstNum> {
     unsigned GetElementPtr_Count;
     unsigned FP_Count;
     unsigned INT_Count;
+    unsigned Branch_Count;
 
     // initialized counters
     CountFeatureInstNum() : Store_Count(0), Load_Count(0), GetElementPtr_Count(0) 
-                           ,FP_Count(0), INT_Count(0) {}
+                           ,FP_Count(0), INT_Count(0), Branch_Count(0) {}
     
     // define counters
     void visitStoreInst(StoreInst &SI) { ++Store_Count; }
@@ -39,6 +40,7 @@ struct CountFeatureInstNum : public InstVisitor<CountFeatureInstNum> {
             ++INT_Count;
         }
     }
+    void visitBranchInst(BranchInst &BI) { ++Branch_Count;}
 };
 
 #endif

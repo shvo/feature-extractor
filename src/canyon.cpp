@@ -65,10 +65,13 @@ public:
         unsigned NumGetElementPtr = CFIN.GetElementPtr_Count; 
         unsigned NumFP = CFIN.FP_Count; 
         unsigned NumINT = CFIN.INT_Count; 
+        unsigned NumBranch = CFIN.Branch_Count;
         errs() << "The number of store insts is: " << NumStore << "\n";
         errs() << "The number of load insts is: " << NumLoad << "\n";
+        errs() << "The number of GetElementPtr insts is: " << NumLoad << "\n";
         errs() << "The number of floating-point insts is: " << NumFP << "\n";
         errs() << "The number of integer insts is: " << NumINT << "\n";
+        errs() << "The number of branch insts is: " << NumBranch << "\n";
         
         // Construct DDG        
         //DataDepGraph *ddg = new DataDepGraph(&F, DA);
